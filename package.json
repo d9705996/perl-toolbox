@@ -12,6 +12,24 @@
       "type": "object",
       "title": "perl-toolbox",
       "properties": {
+        "perl-toolbox.syntax.exec": {
+          "type": ["string"],
+          "default": "perl",
+          "description": "perl binary",
+          "scope": "window"
+        },
+        "perl-toolbox.syntax.path": {
+          "type": ["string", "null"],
+          "default": null,
+          "description": "path to perl binary",
+          "scope": "window"
+        },
+        "perl-toolbox.syntax.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Syntax Checking",
+          "scope": "window"
+        },
         "perl-toolbox.lint.severity": {
           "type": "string",
           "enum": ["gentle", "stern", "harsh", "cruel", "brutal"],

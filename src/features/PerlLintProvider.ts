@@ -41,7 +41,7 @@ export default class PerlLintProvider {
     let decoded = "";
 
     let proc = cp.spawn(
-      "perlcritic",
+      this.configuration.exec,
       this.getCommandArguments(),
       this.getCommandOptions()
     );
@@ -91,7 +91,12 @@ export default class PerlLintProvider {
   }
 
   private getMessage(tokens) {
-    return this.getSeverityAsText(tokens[0]).toUpperCase() + ": " + tokens[3];
+    return (
+      "Lint: " +
+      this.getSeverityAsText(tokens[0]).toUpperCase() +
+      ": " +
+      tokens[3]
+    );
   }
 
   private getSeverityAsText(severity) {
@@ -129,7 +134,7 @@ export default class PerlLintProvider {
   private getCommandOptions() {
     return {
       shell: true,
-      cwd: this.getWorkingDirectory()
+      cwd: this.configuration.path
     };
   }
 
@@ -151,10 +156,6 @@ export default class PerlLintProvider {
       policies.push(policy);
     });
     return policies.join(" ");
-  }
-
-  private getWorkingDirectory() {
-    return this.configuration.path;
   }
 
   private useProfile() {
