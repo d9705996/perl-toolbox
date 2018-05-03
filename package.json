@@ -1,7 +1,7 @@
 {
-  "name": "perlcritic",
-  "displayName": "perlcritic",
-  "description": "Linter for Perl",
+  "name": "perl-toolbox",
+  "displayName": "Perl Toolbox",
+  "description": "Perl Toolbox for Linting and Syntax Checking",
   "version": "0.0.1",
   "publisher": "d9705996",
   "engines": {
@@ -10,69 +10,75 @@
   "contributes": {
     "configuration": {
       "type": "object",
-      "title": "Perlcritic",
+      "title": "perl-toolbox",
       "properties": {
-        "perlcritic.lintseverity": {
+        "perl-toolbox.lint.severity": {
           "type": "string",
           "enum": ["gentle", "stern", "harsh", "cruel", "brutal"],
           "default": "brutal",
           "description": "Report violations up to this severity",
           "scope": "window"
         },
-        "perlcritic.executable": {
+        "perl-toolbox.lint.exec": {
           "type": ["string"],
           "default": "perlcritic",
           "description": "perlcritic binary",
           "scope": "window"
         },
-        "perlcritic.useProfile": {
+        "perl-toolbox.lint.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable linting",
+          "scope": "window"
+        },
+        "perl-toolbox.lint.useProfile": {
           "type": "boolean",
           "default": false,
           "description": "Use settings from ~/.perlcriticrc",
           "scope": "window"
         },
-        "perlcritic.severity.brutal": {
+        "perl-toolbox.lint.brutal": {
           "type": "string",
-          "enum": ["critical", "warning", "info"],
-          "default": "critical",
+          "enum": ["critical", "warning", "info", "hint"],
+          "default": "warning",
           "description": "Problem severity for brutal violations",
           "scope": "window"
         },
-        "perlcritic.severity.cruel": {
+        "perl-toolbox.lint.cruel": {
           "type": "string",
-          "enum": ["critical", "warning", "info"],
-          "default": "critical",
+          "enum": ["critical", "warning", "info", "hint"],
+          "default": "warning",
           "description": "Problem severity for cruel violations",
           "scope": "window"
         },
-        "perlcritic.severity.harsh": {
+        "perl-toolbox.lint.harsh": {
           "type": "string",
-          "enum": ["critical", "warning", "info"],
-          "default": "warning",
+          "enum": ["critical", "warning", "info", "hint"],
+          "default": "info",
           "description": "Problem severity for harsh violations",
           "scope": "window"
         },
-        "perlcritic.severity.stern": {
+        "perl-toolbox.lint.stern": {
           "type": "string",
-          "enum": ["critical", "warning", "info"],
-          "default": "warning",
+          "enum": ["critical", "warning", "info", "hint"],
+          "default": "info",
           "description": "Problem severity for stern violations",
           "scope": "window"
         },
-        "perlcritic.severity.gentle": {
+        "perl-toolbox.lint.gentle": {
           "type": "string",
-          "enum": ["critical", "warning", "info"],
-          "default": "info",
+          "enum": ["critical", "warning", "info", "hint"],
+          "default": "hint",
           "description": "Problem severity for gentle violations",
           "scope": "window"
         },
-        "perlcritic.path": {
+        "perl-toolbox.lint.path": {
           "type": ["string", "null"],
           "default": null,
           "description": "path to perlcritic binary",
           "scope": "window"
         },
-        "perlcritic.excludedPolicies": {
+        "perl-toolbox.lint.excludedPolicies": {
           "type": "array",
           "default": [],
           "description": "Policies to exclude",
