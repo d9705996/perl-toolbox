@@ -32,7 +32,6 @@ export default class PerlLintProvider {
   private lint(textDocument: vscode.TextDocument) {
     this.document = textDocument;
     this.configuration = vscode.workspace.getConfiguration("perl-toolbox.lint");
-    console.log(this.configuration);
     if (textDocument.languageId !== "perl") {
       return;
     }
