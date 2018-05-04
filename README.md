@@ -1,65 +1,55 @@
-# perlcritic README
+# Perl Toolbox
 
-This is the README for your extension "perlcritic". After writing up a brief description, we recommend including the following sections.
+Perl Toolbox for Visual Studio Code provides support for linting and syntax checking for Perl
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+* Perlcritic linting with customizable severities
 
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+* Perl Syntax checking
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+* perl (for syntax highlighting)
+* perlcritic (for linting)
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+| setting                              | default    | description                                           |
+| ------------------------------------ | ---------- | ----------------------------------------------------- |
+| `perl-toolbox.syntax.exec`           | perl       | name of the perl binary                               |
+| `perl-toolbox.syntax.path`           | `null`     | path to the perl binary                               |
+| `perl-toolbox.syntax.enabled`        | true       | enable syntax checking                                |
+| `perl-toolbox.lint.exec`             | perlcritic | name of the perlcritic binary                         |
+| `perl-toolbox.lint.path`             | `null`     | path to the perlcritic binary                         |
+| `perl-toolbox.syntax.exec`           | perl       | name of the perl binary                               |
+| `perl-toolbox.lint.severity`         | brutal     | perlcritic severity [brutal,cruel,harsh,stern,gentle] |
+| `perl-toolbox.lint.useProfile`       | false      | use settings in .perlcriticrc                         |
+| `perl-toolbox.lint.useProfile`       | false      | use settings in .perlcriticrc                         |
+| `perl-toolbox.lint.excludedPolicies` | []         | An array of perlcritic policies to ignore             |
+| `perl-toolbox.lint.brutal`           | warning    | VS code Problem severity for brutal violations        |
+| `perl-toolbox.lint.cruel`            | warning    | VS code Problem severity for cruel violations         |
+| `perl-toolbox.lint.harsh`            | info       | VS code Problem severity for harsh violations         |
+| `perl-toolbox.lint.stern`            | info       | VS code Problem severity for stern violations         |
+| `perl-toolbox.lint.gentle`           | hint       | VS code Problem severity for gentle violations        |
 
-For example:
+## Configuration
 
-This extension contributes the following settings:
+`perl-toolbox.syntax.path` and `perl-toolbox.lint.path` must be set to the directory containing the executable files prior to linting/syntax checking.
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+Only documents with a "perl" language mode are checked.
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+* Documents are only checked when they are opened or saved.
+* On type checking is not supported.
+
+## Troubleshooting
+
+Linting error messages are displayed in "developer Tools"
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
-
 ### 1.0.0
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Initial release

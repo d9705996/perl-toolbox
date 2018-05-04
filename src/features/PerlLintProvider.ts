@@ -6,7 +6,7 @@ import * as vscode from "vscode";
 export default class PerlLintProvider {
   private diagnosticCollection: vscode.DiagnosticCollection;
   private command: vscode.Disposable;
-  private configuration: vscode.WorkSpace.Configuration;
+  private configuration: vscode.WorkspaceConfiguration;
   private document: vscode.TextDocument;
 
   public activate(subscriptions: vscode.Disposable[]) {
@@ -21,6 +21,14 @@ export default class PerlLintProvider {
 
     vscode.workspace.onDidOpenTextDocument(this.lint, this, subscriptions);
     vscode.workspace.onDidSaveTextDocument(this.lint, this);
+
+    vscode.workspace.onDidCloseTextDocument(
+      textDocument => {
+        this.diagnosticCollection.delete(textDocument.uri);
+      },
+      null,
+      subscriptions
+    );
   }
 
   public dispose(): void {

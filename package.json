@@ -2,11 +2,16 @@
   "name": "perl-toolbox",
   "displayName": "Perl Toolbox",
   "description": "Perl Toolbox for Linting and Syntax Checking",
-  "version": "0.0.1",
+  "repository": {
+    "url": "https://github.com/d9705996/perl-toolbox"
+  },
+  "license": "MIT",
+  "version": "1.0.0",
   "publisher": "d9705996",
   "engines": {
     "vscode": "^1.22.0"
   },
+  "icon": "images/perl.png",
   "contributes": {
     "configuration": {
       "type": "object",
@@ -105,7 +110,8 @@
       }
     }
   },
-  "categories": ["Other"],
+  "categories": ["Linters"],
+  "keywords": ["Perl", "Perlcritic", "linting", "syntax"],
   "activationEvents": ["onLanguage:perl"],
   "main": "./out/extension",
   "scripts": {
