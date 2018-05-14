@@ -16,7 +16,7 @@ Perl Toolbox for Visual Studio Code provides support for linting and syntax chec
 ## Extension Settings
 
 | setting                              | default    | description                                           |
-| ------------------------------------ | ---------- | ----------------------------------------------------- |
+|--------------------------------------|------------|-------------------------------------------------------|
 | `perl-toolbox.syntax.exec`           | perl       | name of the perl binary                               |
 | `perl-toolbox.syntax.path`           | `null`     | path to the perl binary                               |
 | `perl-toolbox.syntax.enabled`        | true       | enable syntax checking                                |
@@ -32,6 +32,7 @@ Perl Toolbox for Visual Studio Code provides support for linting and syntax chec
 | `perl-toolbox.lint.harsh`            | info       | VS code Problem severity for harsh violations         |
 | `perl-toolbox.lint.stern`            | info       | VS code Problem severity for stern violations         |
 | `perl-toolbox.lint.gentle`           | hint       | VS code Problem severity for gentle violations        |
+| `perl-toolbox.lint.highlightMode`    | line       | highlight mode (word/line)                            |
 
 ## Configuration
 
@@ -49,6 +50,10 @@ Only documents with a "perl" language mode are checked.
 Linting error messages are displayed in "developer Tools"
 
 ## Release Notes
+
+### 1.1.0
+
+* Add highlightMode option for per line/word lint highlighting
 
 ### 1.0.0
 
