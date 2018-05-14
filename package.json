@@ -35,6 +35,13 @@
           "description": "Enable Syntax Checking",
           "scope": "window"
         },
+        "perl-toolbox.lint.highlightMode": {
+          "type": "string",
+          "enum": ["line", "word"],
+          "default": "line",
+          "description": "Highlight violations per word or line",
+          "scope": "window"
+        },
         "perl-toolbox.lint.severity": {
           "type": "string",
           "enum": ["gentle", "stern", "harsh", "cruel", "brutal"],

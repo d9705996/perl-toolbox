@@ -90,11 +90,17 @@ export default class PerlLintProvider {
   }
 
   private getRange(tokens) {
+    let end = Number.MAX_VALUE;
+
+    if (this.configuration.highlightMode === "word") {
+      end = Number(tokens[2]);
+    }
+
     return new vscode.Range(
       Number(tokens[1]) - 1,
       Number(tokens[2]) - 1,
       Number(tokens[1]) - 1,
-      300
+      end
     );
   }
 
