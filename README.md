@@ -51,6 +51,11 @@ Linting error messages are displayed in "developer Tools"
 
 ## Release Notes
 
+### 1.2.0
+
+* ENH [#1](https://github.com/d9705996/perl-toolbox/issues/1) - Enable Remote Linting (Thanks @testcaseone)
+* FIX [#2](https://github.com/d9705996/perl-toolbox/issues/2) - word highlightMode only selecting one character
+
 ### 1.1.0
 
 * Add highlightMode option for per line/word lint highlighting
