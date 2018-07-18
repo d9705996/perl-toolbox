@@ -1,7 +1,13 @@
 # Change Log
-All notable changes to the "perlcritic" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+## 1.2.0
 
-## [Unreleased]
-- Initial release
+* ENH #1 - Enable Remote Linting (Thanks @testcaseone)
+* FIX #2 - word highlightMode only selecting one character
+
+## 1.1.0
+
+* Add highlightMode option for per line/word lint highlighting
+
+## 1.0.0
+Initial release
