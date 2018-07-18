@@ -2,12 +2,16 @@
 
 import * as cp from "child_process";
 import * as vscode from "vscode";
+import * as fs from "fs";
+import * as os from "os";
+
 
 export default class PerlLintProvider {
   private diagnosticCollection: vscode.DiagnosticCollection;
   private command: vscode.Disposable;
   private configuration: vscode.WorkspaceConfiguration;
   private document: vscode.TextDocument;
+  private tempfilepath;
 
   public activate(subscriptions: vscode.Disposable[]) {
     this.diagnosticCollection = vscode.languages.createDiagnosticCollection();
@@ -47,7 +51,8 @@ export default class PerlLintProvider {
       return;
     }
     let decoded = "";
-    console.log(this.document.fileName);
+    this.tempfilepath = os.tmpdir() + this.document.fileName  + '.lint') ;
+    fs.writeFile(this.tempfilepath, this.document.getText());
     let proc = cp.spawn(
       this.configuration.exec,
       this.getCommandArguments(),
@@ -66,6 +71,7 @@ export default class PerlLintProvider {
         this.document.uri,
         this.getDiagnostics(decoded)
       );
+      fs.unlink(this.tempfilepath);
     });
   }
 
@@ -92,7 +98,8 @@ export default class PerlLintProvider {
   private getRange(tokens) {
     if (this.configuration.highlightMode === "word") {
       return this.document.getWordRangeAtPosition(
-        new vscode.Position(Number(tokens[1]) - 1, Number(tokens[2]) - 1)
+        new vscode.Position(Number(tokens[1]) - 1, Number(tokens[2]) - 1),
+        /[^\s]+/
       );
     }
 
@@ -159,7 +166,7 @@ export default class PerlLintProvider {
       this.getExcludedPolicies(),
       "--verbose",
       '"%s~|~%l~|~%c~|~%m~|~%e~|~%p~||~%n"',
-      this.document.fileName
+      this.tempfilepath
     ];
   }
 

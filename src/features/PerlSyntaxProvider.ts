@@ -2,12 +2,14 @@
 
 import * as cp from "child_process";
 import * as vscode from "vscode";
-
+import * as fs from "fs";
+import * as os from "os";
 export default class PerlSyntaxProvider {
   private diagnosticCollection: vscode.DiagnosticCollection;
   private command: vscode.Disposable;
   private configuration: vscode.WorkspaceConfiguration;
   private document: vscode.TextDocument;
+  private tempfilepath;
 
   public activate(subscriptions: vscode.Disposable[]) {
     this.diagnosticCollection = vscode.languages.createDiagnosticCollection();
@@ -50,9 +52,12 @@ export default class PerlSyntaxProvider {
     }
     let decoded = "";
 
+    this.tempfilepath = os.tmpdir() + this.document.fileName + '.syntax') ;
+    fs.writeFile(this.tempfilepath, this.document.getText());
+
     let proc = cp.spawn(
       this.configuration.exec,
-      ["-c", this.document.fileName],
+      ["-c", this.tempfilepath],
       this.getCommandOptions()
     );
 
@@ -65,6 +70,7 @@ export default class PerlSyntaxProvider {
         this.document.uri,
         this.getDiagnostics(decoded)
       );
+      fs.unlink(this.tempfilepath);
     });
   }
 

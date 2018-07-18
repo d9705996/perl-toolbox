@@ -18,13 +18,18 @@
       "title": "perl-toolbox",
       "properties": {
         "perl-toolbox.syntax.exec": {
-          "type": ["string"],
+          "type": [
+            "string"
+          ],
           "default": "perl",
           "description": "perl binary",
           "scope": "window"
         },
         "perl-toolbox.syntax.path": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "default": null,
           "description": "path to perl binary",
           "scope": "window"
@@ -37,20 +42,31 @@
         },
         "perl-toolbox.lint.highlightMode": {
           "type": "string",
-          "enum": ["line", "word"],
+          "enum": [
+            "line",
+            "word"
+          ],
           "default": "line",
           "description": "Highlight violations per word or line",
           "scope": "window"
         },
         "perl-toolbox.lint.severity": {
           "type": "string",
-          "enum": ["gentle", "stern", "harsh", "cruel", "brutal"],
+          "enum": [
+            "gentle",
+            "stern",
+            "harsh",
+            "cruel",
+            "brutal"
+          ],
           "default": "brutal",
           "description": "Report violations up to this severity",
           "scope": "window"
         },
         "perl-toolbox.lint.exec": {
-          "type": ["string"],
+          "type": [
+            "string"
+          ],
           "default": "perlcritic",
           "description": "perlcritic binary",
           "scope": "window"
@@ -69,41 +85,69 @@
         },
         "perl-toolbox.lint.brutal": {
           "type": "string",
-          "enum": ["critical", "warning", "info", "hint"],
+          "enum": [
+            "critical",
+            "warning",
+            "info",
+            "hint"
+          ],
           "default": "warning",
           "description": "Problem severity for brutal violations",
           "scope": "window"
         },
         "perl-toolbox.lint.cruel": {
           "type": "string",
-          "enum": ["critical", "warning", "info", "hint"],
+          "enum": [
+            "critical",
+            "warning",
+            "info",
+            "hint"
+          ],
           "default": "warning",
           "description": "Problem severity for cruel violations",
           "scope": "window"
         },
         "perl-toolbox.lint.harsh": {
           "type": "string",
-          "enum": ["critical", "warning", "info", "hint"],
+          "enum": [
+            "critical",
+            "warning",
+            "info",
+            "hint"
+          ],
           "default": "info",
           "description": "Problem severity for harsh violations",
           "scope": "window"
         },
         "perl-toolbox.lint.stern": {
           "type": "string",
-          "enum": ["critical", "warning", "info", "hint"],
+          "enum": [
+            "critical",
+            "warning",
+            "info",
+            "hint"
+          ],
           "default": "info",
           "description": "Problem severity for stern violations",
           "scope": "window"
         },
         "perl-toolbox.lint.gentle": {
           "type": "string",
-          "enum": ["critical", "warning", "info", "hint"],
+          "enum": [
+            "critical",
+            "warning",
+            "info",
+            "hint"
+          ],
           "default": "hint",
           "description": "Problem severity for gentle violations",
           "scope": "window"
         },
         "perl-toolbox.lint.path": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "default": null,
           "description": "path to perlcritic binary",
           "scope": "window"
@@ -117,9 +161,18 @@
       }
     }
   },
-  "categories": ["Linters"],
-  "keywords": ["Perl", "Perlcritic", "linting", "syntax"],
-  "activationEvents": ["onLanguage:perl"],
+  "categories": [
+    "Linters"
+  ],
+  "keywords": [
+    "Perl",
+    "Perlcritic",
+    "linting",
+    "syntax"
+  ],
+  "activationEvents": [
+    "onLanguage:perl"
+  ],
   "main": "./out/extension",
   "scripts": {
     "vscode:prepublish": "npm run compile",
