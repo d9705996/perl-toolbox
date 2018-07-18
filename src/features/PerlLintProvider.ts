@@ -5,7 +5,6 @@ import * as vscode from "vscode";
 import * as fs from "fs";
 import * as os from "os";
 
-
 export default class PerlLintProvider {
   private diagnosticCollection: vscode.DiagnosticCollection;
   private command: vscode.Disposable;
@@ -51,7 +50,7 @@ export default class PerlLintProvider {
       return;
     }
     let decoded = "";
-    this.tempfilepath = os.tmpdir() + this.document.fileName  + '.lint') ;
+    this.tempfilepath = os.tmpdir() + this.document.fileName + ".lint";
     fs.writeFile(this.tempfilepath, this.document.getText());
     let proc = cp.spawn(
       this.configuration.exec,

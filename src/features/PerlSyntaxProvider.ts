@@ -52,7 +52,7 @@ export default class PerlSyntaxProvider {
     }
     let decoded = "";
 
-    this.tempfilepath = os.tmpdir() + this.document.fileName + '.syntax') ;
+    this.tempfilepath = os.tmpdir() + this.document.fileName + ".syntax";
     fs.writeFile(this.tempfilepath, this.document.getText());
 
     let proc = cp.spawn(
