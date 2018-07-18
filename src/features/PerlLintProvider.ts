@@ -47,7 +47,7 @@ export default class PerlLintProvider {
       return;
     }
     let decoded = "";
-
+    console.log(this.document.fileName);
     let proc = cp.spawn(
       this.configuration.exec,
       this.getCommandArguments(),
@@ -90,17 +90,17 @@ export default class PerlLintProvider {
   }
 
   private getRange(tokens) {
-    let end = Number.MAX_VALUE;
-
     if (this.configuration.highlightMode === "word") {
-      end = Number(tokens[2]);
+      return this.document.getWordRangeAtPosition(
+        new vscode.Position(Number(tokens[1]) - 1, Number(tokens[2]) - 1)
+      );
     }
 
     return new vscode.Range(
       Number(tokens[1]) - 1,
       Number(tokens[2]) - 1,
       Number(tokens[1]) - 1,
-      end
+      Number.MAX_VALUE
     );
   }
 
