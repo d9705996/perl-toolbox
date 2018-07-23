@@ -6,7 +6,7 @@
     "url": "https://github.com/d9705996/perl-toolbox"
   },
   "license": "MIT",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "publisher": "d9705996",
   "engines": {
     "vscode": "^1.22.0"

@@ -4,6 +4,7 @@ import * as cp from "child_process";
 import * as vscode from "vscode";
 import * as fs from "fs";
 import * as os from "os";
+import * as path from "path";
 export default class PerlSyntaxProvider {
   private diagnosticCollection: vscode.DiagnosticCollection;
   private command: vscode.Disposable;
@@ -52,7 +53,11 @@ export default class PerlSyntaxProvider {
     }
     let decoded = "";
 
-    this.tempfilepath = os.tmpdir() + this.document.fileName + ".syntax";
+    this.tempfilepath =
+      os.tmpdir() +
+      path.sep +
+      path.basename(this.document.fileName) +
+      ".syntax";
     fs.writeFile(this.tempfilepath, this.document.getText());
 
     let proc = cp.spawn(
