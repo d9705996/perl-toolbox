@@ -62,7 +62,7 @@ export default class PerlSyntaxProvider {
 
     let proc = cp.spawn(
       this.configuration.exec,
-      ["-c", this.tempfilepath],
+      [this.getIncludePaths(), "-c", this.tempfilepath],
       this.getCommandOptions()
     );
 
@@ -77,6 +77,15 @@ export default class PerlSyntaxProvider {
       );
       fs.unlink(this.tempfilepath);
     });
+  }
+
+  private getIncludePaths() {
+    let includePaths = [];
+    this.configuration.includePaths.forEach(path => {
+      includePaths.push("-I");
+      includePaths.push(path);
+    });
+    return includePaths.join(" ");
   }
 
   private getCommandOptions() {

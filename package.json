@@ -34,6 +34,12 @@
           "description": "path to perl binary",
           "scope": "window"
         },
+        "perl-toolbox.syntax.includePaths": {
+          "type": "array",
+          "default": [],
+          "description": "Paths to add to @INC",
+          "scope": "window"
+        },
         "perl-toolbox.syntax.enabled": {
           "type": "boolean",
           "default": true,

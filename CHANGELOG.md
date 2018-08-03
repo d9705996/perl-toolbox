@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+
+- ENH [#4](https://github.com/d9705996/perl-toolbox/issues/4) - Enable configurable Library Paths (Thanks @ancillaryCode)
+
 ## 1.2.1
 
 - FIX [#3](https://github.com/d9705996/perl-toolbox/issues/3) - Temporary path issues (Thanks @laama1)

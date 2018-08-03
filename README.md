@@ -20,6 +20,7 @@ Perl Toolbox for Visual Studio Code provides support for linting and syntax chec
 | `perl-toolbox.syntax.exec`           | perl       | name of the perl binary                               |
 | `perl-toolbox.syntax.path`           | `null`     | path to the perl binary                               |
 | `perl-toolbox.syntax.enabled`        | true       | enable syntax checking                                |
+| `perl-toolbox.syntax.includePaths`   | []         | An Array of paths to add to @INC                      |
 | `perl-toolbox.lint.exec`             | perlcritic | name of the perlcritic binary                         |
 | `perl-toolbox.lint.path`             | `null`     | path to the perlcritic binary                         |
 | `perl-toolbox.syntax.exec`           | perl       | name of the perl binary                               |
