@@ -54,7 +54,7 @@ export default class PerlSyntaxProvider {
     let decoded = "";
 
     this.tempfilepath =
-      os.tmpdir() +
+      this.getTemporaryPath() +
       path.sep +
       path.basename(this.document.fileName) +
       ".syntax";
@@ -77,6 +77,14 @@ export default class PerlSyntaxProvider {
       );
       fs.unlink(this.tempfilepath);
     });
+  }
+
+  private getTemporaryPath() {
+    let configuration = vscode.workspace.getConfiguration("perl-toolbox");
+    if (configuration.temporaryPath === null) {
+      return os.tmpdir();
+    }
+    return configuration.temporaryPath;
   }
 
   private getIncludePaths() {
@@ -116,7 +124,12 @@ export default class PerlSyntaxProvider {
   private getRange(violation) {
     let patt = /line\s+(\d+)/i;
     let line = patt.exec(violation)[1];
-    return new vscode.Range(Number(line) - 1, 0, Number(line) - 1, Number.MAX_VALUE);
+    return new vscode.Range(
+      Number(line) - 1,
+      0,
+      Number(line) - 1,
+      Number.MAX_VALUE
+    );
   }
 
   private isValidViolation(violation) {

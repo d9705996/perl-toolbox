@@ -17,6 +17,15 @@
       "type": "object",
       "title": "perl-toolbox",
       "properties": {
+        "perl-toolbox.temporaryPath": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Path to write temporary lint and syntax files to.  Defaults to OS specific tmp path",
+          "scope": "window"
+        },
         "perl-toolbox.syntax.exec": {
           "type": [
             "string"

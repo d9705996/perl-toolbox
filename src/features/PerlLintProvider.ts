@@ -52,7 +52,10 @@ export default class PerlLintProvider {
     }
     let decoded = "";
     this.tempfilepath =
-      os.tmpdir() + path.sep + path.basename(this.document.fileName) + ".lint";
+      this.getTemporaryPath() +
+      path.sep +
+      path.basename(this.document.fileName) +
+      ".lint";
     fs.writeFile(this.tempfilepath, this.document.getText());
     let proc = cp.spawn(
       this.configuration.exec,
@@ -178,6 +181,14 @@ export default class PerlLintProvider {
       policies.push(policy);
     });
     return policies.join(" ");
+  }
+
+  private getTemporaryPath() {
+    let configuration = vscode.workspace.getConfiguration("perl-toolbox");
+    if (configuration.temporaryPath === null) {
+      return os.tmpdir();
+    }
+    return configuration.temporaryPath;
   }
 
   private useProfile() {
