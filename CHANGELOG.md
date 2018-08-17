@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## 1.3.0 2018-08-18
 
 - ENH [#4](https://github.com/d9705996/perl-toolbox/issues/4) - Enable configurable Library Paths (Thanks @ancillaryCode)
 - ENH [#6](https://github.com/d9705996/perl-toolbox/issues/6) - Enable configurable Temporary Directory
