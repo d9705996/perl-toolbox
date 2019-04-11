@@ -58,24 +58,24 @@ export default class PerlSyntaxProvider {
       path.sep +
       path.basename(this.document.fileName) +
       ".syntax";
-    fs.writeFile(this.tempfilepath, this.document.getText());
-
-    let proc = cp.spawn(
-      this.configuration.exec,
-      [this.getIncludePaths(), "-c", this.tempfilepath],
-      this.getCommandOptions()
-    );
-
-    proc.stderr.on("data", (data: Buffer) => {
-      decoded += data;
-    });
-
-    proc.stdout.on("end", () => {
-      this.diagnosticCollection.set(
-        this.document.uri,
-        this.getDiagnostics(decoded)
+    fs.writeFile(this.tempfilepath, this.document.getText(), () => {
+        let proc = cp.spawn(
+        this.configuration.exec,
+        [this.getIncludePaths(), "-c", this.tempfilepath],
+        this.getCommandOptions()
       );
-      fs.unlink(this.tempfilepath);
+
+      proc.stderr.on("data", (data: Buffer) => {
+        decoded += data;
+      });
+
+      proc.stdout.on("end", () => {
+        this.diagnosticCollection.set(
+          this.document.uri,
+          this.getDiagnostics(decoded)
+        );
+        fs.unlink(this.tempfilepath, () => {});
+      });
     });
   }
 
