@@ -59,7 +59,7 @@ export default class PerlSyntaxProvider {
       path.basename(this.document.fileName) +
       ".syntax";
     fs.writeFile(this.tempfilepath, this.document.getText(), () => {
-        let proc = cp.spawn(
+      let proc = cp.spawn(
         this.configuration.exec,
         [this.getIncludePaths(), "-c", this.tempfilepath],
         this.getCommandOptions()
