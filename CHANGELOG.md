@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.1 2019-04-12
+
+- FIX [#12](https://github.com/d9705996/perl-toolbox/issues/12) - Add Callback Functions for fs module (Thanks @seagirl)
+
 ## 1.3.0 2018-08-18
 
 - ENH [#4](https://github.com/d9705996/perl-toolbox/issues/4) - Enable configurable Library Paths (Thanks @ancillaryCode)
