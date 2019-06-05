@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.2 2019-06-05
+
+- FIX [#10](https://github.com/d9705996/perl-toolbox/issues/10)
+  Lint messages have ".git" appended to filenames (Thanks @chrstphrchvz)
+
 ## 1.3.1 2019-04-12
 
 - FIX [#12](https://github.com/d9705996/perl-toolbox/issues/12) - Add Callback Functions for fs module (Thanks @seagirl)
