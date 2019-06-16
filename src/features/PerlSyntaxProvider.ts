@@ -10,6 +10,7 @@ export default class PerlSyntaxProvider {
   private command: vscode.Disposable;
   private configuration: vscode.WorkspaceConfiguration;
   private document: vscode.TextDocument;
+  private _workspaceFolder: string;
   private tempfilepath;
 
   public activate(subscriptions: vscode.Disposable[]) {
@@ -86,6 +87,27 @@ export default class PerlSyntaxProvider {
     });
   }
 
+  private getWorkspaceFolder(): string {
+    if (vscode.workspace.workspaceFolders) {
+      if (this.document) {
+        const workspaceFolder = vscode.workspace.getWorkspaceFolder(this.document.uri);
+        if (workspaceFolder) {
+          return workspaceFolder.uri.fsPath;
+        }
+      }
+      return vscode.workspace.workspaceFolders[0].uri.fsPath;
+    } else {
+      return undefined;
+    }
+  }
+
+  private getWorkspaceRoot(): string {
+    if (!this._workspaceFolder) {
+      this._workspaceFolder = this.getWorkspaceFolder();
+    }
+    return this._workspaceFolder;
+  }
+
   private getTemporaryPath() {
     let configuration = vscode.workspace.getConfiguration("perl-toolbox");
     if (configuration.temporaryPath === null) {
@@ -98,6 +120,7 @@ export default class PerlSyntaxProvider {
     let includePaths = [];
     this.configuration.includePaths.forEach(path => {
       includePaths.push("-I");
+      path = path.replace(/\$workspaceRoot/g, this.getWorkspaceRoot());
       includePaths.push(path);
     });
     return includePaths.join(" ");
