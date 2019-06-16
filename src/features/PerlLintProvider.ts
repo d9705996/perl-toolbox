@@ -11,6 +11,7 @@ export default class PerlLintProvider {
   private command: vscode.Disposable;
   private configuration: vscode.WorkspaceConfiguration;
   private document: vscode.TextDocument;
+  private _workspaceFolder: string;
   private tempfilepath;
 
   public activate(subscriptions: vscode.Disposable[]) {
@@ -84,6 +85,27 @@ export default class PerlLintProvider {
         fs.unlink(this.tempfilepath, () => {});
       });
     });
+  }
+
+  private getWorkspaceRoot(): string {
+    if (!this._workspaceFolder) {
+      this._workspaceFolder = this.getWorkspaceFolder();
+    }
+    return this._workspaceFolder;
+  }
+
+  private getWorkspaceFolder(): string {
+    if (vscode.workspace.workspaceFolders) {
+      if (this.document) {
+        const workspaceFolder = vscode.workspace.getWorkspaceFolder(this.document.uri);
+        if (workspaceFolder) {
+          return workspaceFolder.uri.fsPath;
+        }
+      }
+      return vscode.workspace.workspaceFolders[0].uri.fsPath;
+    } else {
+      return undefined;
+    }
   }
 
   private getDiagnostics(output) {
@@ -173,21 +195,21 @@ export default class PerlLintProvider {
   private getCommandArguments() {
     return [
       "--" + this.getLintSeverity(),
-      this.useProfile(),
-      this.getExcludedPolicies(),
+      ...this.useProfile(),
+      ...this.getExcludedPolicies(),
       "--verbose",
       '"%s~|~%l~|~%c~|~%m~|~%e~|~%p~||~%n"',
       this.tempfilepath
     ];
   }
 
-  private getExcludedPolicies() {
+  private getExcludedPolicies(): string[] {
     let policies = [];
     this.configuration.excludedPolicies.forEach(policy => {
       policies.push("--exclude");
       policies.push(policy);
     });
-    return policies.join(" ");
+    return policies;
   }
 
   private getTemporaryPath() {
@@ -198,11 +220,19 @@ export default class PerlLintProvider {
     return configuration.temporaryPath;
   }
 
-  private useProfile() {
+  private useProfile(): string[] {
     if (!this.configuration.useProfile) {
-      return "--noprofile";
+      return ["--noprofile"];
+    } else {
+      if (this.configuration.perlcriticProfile) {
+        var profile: string = this.configuration.perlcriticProfile.replace(/\$workspaceRoot/g, this.getWorkspaceRoot());
+        return ["--profile", profile];
+      } else {
+        return [];
+      }
     }
   }
+
   private getLintSeverity() {
     return this.configuration.severity;
   }
