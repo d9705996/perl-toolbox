@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.0 2020-01-10
+
+- ENH [#16](https://github.com/d9705996/perl-toolbox/pull/16)
+  $workspaceRoot substitution for include paths (Thanks @haeberlet)
+- FIX [#18](https://github.com/d9705996/perl-toolbox/pull/18)
+  fix overriding this.document object (Thanks @tryfunc)
+
 ## 1.3.2 2019-06-05
 
 - FIX [#10](https://github.com/d9705996/perl-toolbox/issues/10)
