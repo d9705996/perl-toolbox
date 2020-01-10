@@ -18,27 +18,19 @@
       "title": "perl-toolbox",
       "properties": {
         "perl-toolbox.temporaryPath": {
-          "type": [
-            "string",
-            "null"
-          ],
+          "type": "string",
           "default": null,
           "description": "Path to write temporary lint and syntax files to.  Defaults to OS specific tmp path",
           "scope": "window"
         },
         "perl-toolbox.syntax.exec": {
-          "type": [
-            "string"
-          ],
+          "type": "string",
           "default": "perl",
           "description": "perl binary",
           "scope": "window"
         },
         "perl-toolbox.syntax.path": {
-          "type": [
-            "string",
-            "null"
-          ],
+          "type": "string",
           "default": null,
           "description": "path to perl binary",
           "scope": "window"
@@ -79,9 +71,7 @@
           "scope": "window"
         },
         "perl-toolbox.lint.exec": {
-          "type": [
-            "string"
-          ],
+          "type": "string",
           "default": "perlcritic",
           "description": "perlcritic binary",
           "scope": "window"
@@ -92,10 +82,15 @@
           "description": "Enable linting",
           "scope": "window"
         },
+        "perl-toolbox.lint.perlcriticProfile": {
+          "type": "string",
+          "description": "perlcritic profile; if not specified uses ~/.perlcriticrc",
+          "scope": "window"
+        },
         "perl-toolbox.lint.useProfile": {
           "type": "boolean",
           "default": false,
-          "description": "Use settings from ~/.perlcriticrc",
+          "description": "Use settings from perlcriticProfile",
           "scope": "window"
         },
         "perl-toolbox.lint.brutal": {
@@ -159,11 +154,7 @@
           "scope": "window"
         },
         "perl-toolbox.lint.path": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "default": null,
+          "type": "string",
           "description": "path to perlcritic binary",
           "scope": "window"
         },
@@ -202,5 +193,8 @@
     "tslint": "^5.15.0",
     "typescript": "^2.9.2",
     "vscode": "^1.1.33"
+  },
+  "dependencies": {
+    "vsce": "^1.63.0"
   }
 }
