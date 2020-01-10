@@ -42,15 +42,15 @@ export default class PerlSyntaxProvider {
   }
 
   private check(textDocument: vscode.TextDocument) {
+    if (textDocument.uri.scheme === "git") {
+      return;
+    }
+
+    if (textDocument.languageId !== "perl") {
+      return;
+    }
+
     this.document = textDocument;
-
-    if (this.document.uri.scheme === "git") {
-      return;
-    }
-
-    if (this.document.languageId !== "perl") {
-      return;
-    }
 
     this.configuration = vscode.workspace.getConfiguration(
       "perl-toolbox.syntax"
