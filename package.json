@@ -31,7 +31,10 @@
         },
         "perl-toolbox.syntax.path": {
           "type": "string",
-          "default": null,
+          "default": [
+            "$workspaceRoot/lib",
+            "$workspaceRoot/local/lib/perl5"
+          ],
           "description": "path to perl binary",
           "scope": "window"
         },
