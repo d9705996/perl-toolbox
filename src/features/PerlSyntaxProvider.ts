@@ -130,6 +130,8 @@ export default class PerlSyntaxProvider {
     return {
       shell: true,
       cwd: this.configuration.path
+        ? this.configuration.path
+        : this.getWorkspaceRoot()
     };
   }
 
