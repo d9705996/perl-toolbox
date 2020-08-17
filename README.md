@@ -52,14 +52,16 @@ machine they are using, put a `.perlcriticrc` file in the root directory of your
 ### include paths
 
 Typically you will have library folders in your project, in a subfolder `lib`.
-When you are using `carton`, the depencies are in a subfolder `local/lib/perl5`. 
+When you are using `carton`, the dependencies are in a subfolder `local/lib/perl5`. 
 
-To make the syntax check work no matter where the github repository is checked out to, you can use the following two entries in your workspace settings .json file
+To make the syntax check work no matter where your project's code is located, Perl Toolbox uses the default configuration of:
 
     "perl-toolbox.syntax.includePaths": [
         "$workspaceRoot/lib",
         "$workspaceRoot/local/lib/perl5"
     ]
+
+This is what 99% of users will need. However if you don't want this default for whatever reason, simply override the `perl-toolbox.syntax.includePaths` setting.
 
 ## Configuration
 
