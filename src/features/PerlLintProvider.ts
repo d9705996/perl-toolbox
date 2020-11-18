@@ -60,26 +60,28 @@ export default class PerlLintProvider {
     }
     let decoded = "";
     this.tempfilepath = this.getTemporaryFilePath();
-    fs.writeFile(this.tempfilepath, this.document.getText(), () => {
-      let proc = cp.spawn(
-        this.configuration.exec,
-        this.getCommandArguments(),
-        this.getCommandOptions()
-      );
-      proc.stdout.on("data", (data: Buffer) => {
-        decoded += data;
-      });
-
-      proc.stderr.on("data", (data: Buffer) => {
-        console.log(`stderr: ${data}`);
-      });
-
-      proc.stdout.on("end", () => {
-        this.diagnosticCollection.set(
-          this.document.uri,
-          this.getDiagnostics(decoded)
+    fs.mkdir(this.getTemporaryFileDir(), { recursive: true }, (err) => {
+      fs.writeFile(this.tempfilepath, this.document.getText(), () => {
+        let proc = cp.spawn(
+          this.configuration.exec,
+          this.getCommandArguments(),
+          this.getCommandOptions()
         );
-        fs.unlink(this.tempfilepath, () => {});
+        proc.stdout.on("data", (data: Buffer) => {
+          decoded += data;
+        });
+
+        proc.stderr.on("data", (data: Buffer) => {
+          console.log(`stderr: ${data}`);
+        });
+
+        proc.stdout.on("end", () => {
+          this.diagnosticCollection.set(
+            this.document.uri,
+            this.getDiagnostics(decoded)
+          );
+          fs.unlink(this.tempfilepath, () => {});
+        });
       });
     });
   }
@@ -217,8 +219,14 @@ export default class PerlLintProvider {
     return configuration.temporaryPath;
   }
   
+  private getTemporaryFileDir(): string {
+    const workspaceRoot = this.getWorkspaceRoot();
+    const fileDir = path.dirname(path.relative(workspaceRoot, this.document.fileName));
+    return path.join(this.getTemporaryPath(), ".lint", fileDir);
+  }
+  
   private getTemporaryFilePath(): string {
-    return this.getTemporaryPath() + path.sep + path.basename(this.document.fileName) + ".lint";
+    return path.join(this.getTemporaryFileDir(), path.basename(this.document.fileName));
   }
 
   private useProfile(): string[] {
