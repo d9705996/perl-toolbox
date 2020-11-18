@@ -59,11 +59,7 @@ export default class PerlLintProvider {
       return;
     }
     let decoded = "";
-    this.tempfilepath =
-      this.getTemporaryPath() +
-      path.sep +
-      path.basename(this.document.fileName) +
-      ".lint";
+    this.tempfilepath = this.getTemporaryFilePath();
     fs.writeFile(this.tempfilepath, this.document.getText(), () => {
       let proc = cp.spawn(
         this.configuration.exec,
@@ -219,6 +215,10 @@ export default class PerlLintProvider {
       return os.tmpdir();
     }
     return configuration.temporaryPath;
+  }
+  
+  private getTemporaryFilePath(): string {
+    return this.getTemporaryPath() + path.sep + path.basename(this.document.fileName) + ".lint";
   }
 
   private useProfile(): string[] {
