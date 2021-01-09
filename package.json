@@ -192,7 +192,7 @@
     "@types/node": "^7.10.5",
     "tslint": "^5.15.0",
     "typescript": "^2.9.2",
-    "vscode": "^1.1.33"
+    "vscode": "^1.1.37"
   },
   "dependencies": {
     "vsce": "^1.83.0"
