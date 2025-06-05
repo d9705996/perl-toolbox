@@ -6,6 +6,8 @@
     "lib": ["es2019"],
     "sourceMap": true,
     "rootDir": "src",
+    "moduleResolution": "node",
+    "types": ["node", "mocha", "vscode"],
     /* Strict Type-Checking Option */
     "strict": false /* enable all strict type-checking options */,
     /* Additional Checks */
