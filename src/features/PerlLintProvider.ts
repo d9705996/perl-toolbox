@@ -2,17 +2,17 @@
 
 import * as cp from "child_process";
 import * as vscode from "vscode";
-import * as fs from "fs";
+import { promises as fs } from "fs";
 import * as os from "os";
 import * as path from "path";
+import { severityAsText, isValidViolation } from "../utils";
 
 export default class PerlLintProvider {
   private diagnosticCollection: vscode.DiagnosticCollection;
-  private command: vscode.Disposable;
   private configuration: vscode.WorkspaceConfiguration;
   private document: vscode.TextDocument;
   private _workspaceFolder: string;
-  private tempfilepath;
+  private tempfilepath: string;
 
   public activate(subscriptions: vscode.Disposable[]) {
     this.diagnosticCollection = vscode.languages.createDiagnosticCollection();
@@ -26,23 +26,14 @@ export default class PerlLintProvider {
 
     vscode.workspace.onDidOpenTextDocument(this.lint, this, subscriptions);
     vscode.workspace.onDidSaveTextDocument(this.lint, this);
-
-    vscode.workspace.onDidCloseTextDocument(
-      textDocument => {
-        this.diagnosticCollection.delete(textDocument.uri);
-      },
-      null,
-      subscriptions
-    );
   }
 
   public dispose(): void {
     this.diagnosticCollection.clear();
     this.diagnosticCollection.dispose();
-    this.command.dispose();
   }
 
-  private lint(textDocument: vscode.TextDocument) {
+  private async lint(textDocument: vscode.TextDocument) {
     if (textDocument.uri.scheme === "git") {
       return;
     }
@@ -59,33 +50,35 @@ export default class PerlLintProvider {
       return;
     }
     let decoded = "";
-    this.tempfilepath =
-      this.getTemporaryPath() +
-      path.sep +
-      path.basename(this.document.fileName) +
-      ".lint";
-    fs.writeFile(this.tempfilepath, this.document.getText(), () => {
-      let proc = cp.spawn(
+    this.tempfilepath = path.join(
+      this.getTemporaryPath(),
+      path.basename(this.document.fileName) + ".lint"
+    );
+
+    await fs.writeFile(this.tempfilepath, this.document.getText());
+    await new Promise<void>(resolve => {
+      const proc = cp.spawn(
         this.configuration.exec,
         this.getCommandArguments(),
         this.getCommandOptions()
       );
-      proc.stdout.on("data", (data: Buffer) => {
+
+      proc.stdout.on("data", data => {
         decoded += data;
       });
 
-      proc.stderr.on("data", (data: Buffer) => {
+      proc.stderr.on("data", data => {
         console.log(`stderr: ${data}`);
       });
 
-      proc.stdout.on("end", () => {
-        this.diagnosticCollection.set(
-          this.document.uri,
-          this.getDiagnostics(decoded)
-        );
-        fs.unlink(this.tempfilepath, () => {});
-      });
+      proc.on("close", () => resolve());
     });
+
+    this.diagnosticCollection.set(
+      this.document.uri,
+      this.getDiagnostics(decoded)
+    );
+    await fs.unlink(this.tempfilepath);
   }
 
   private getWorkspaceRoot(): string {
@@ -112,7 +105,7 @@ export default class PerlLintProvider {
   private getDiagnostics(output) {
     let diagnostics: vscode.Diagnostic[] = [];
     output.split("\n").forEach(violation => {
-      if (this.isValidViolation(violation)) {
+      if (isValidViolation(violation)) {
         diagnostics.push(this.createDiagnostic(violation));
       }
     });
@@ -148,29 +141,14 @@ export default class PerlLintProvider {
   private getMessage(tokens) {
     return (
       "Lint: " +
-      this.getSeverityAsText(tokens[0]).toUpperCase() +
+      severityAsText(tokens[0]).toUpperCase() +
       ": " +
       tokens[3]
     );
   }
 
-  private getSeverityAsText(severity) {
-    switch (parseInt(severity)) {
-      case 5:
-        return "gentle";
-      case 4:
-        return "stern";
-      case 3:
-        return "harsh";
-      case 2:
-        return "cruel";
-      default:
-        return "brutal";
-    }
-  }
-
   private getSeverity(tokens) {
-    switch (this.configuration[this.getSeverityAsText(tokens[0])]) {
+    switch (this.configuration[severityAsText(tokens[0])]) {
       case "hint":
         return vscode.DiagnosticSeverity.Hint;
       case "info":
@@ -182,9 +160,6 @@ export default class PerlLintProvider {
     }
   }
 
-  private isValidViolation(violation) {
-    return violation.split("~|~").length === 6;
-  }
 
   private getCommandOptions() {
     return {
