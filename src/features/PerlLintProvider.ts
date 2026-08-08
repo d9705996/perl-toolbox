@@ -122,11 +122,14 @@ export default class PerlLintProvider {
   private createDiagnostic(violation) {
     let tokens = violation.replace("~||~", "").split("~|~");
 
-    return new vscode.Diagnostic(
+    const diagnostic = new vscode.Diagnostic(
       this.getRange(tokens),
       this.getMessage(tokens),
       this.getSeverity(tokens)
-    );
+    ); 
+    diagnostic.source = this.getPolicyName(tokens);
+
+    return diagnostic;
   }
 
   private getRange(tokens) {
@@ -180,6 +183,10 @@ export default class PerlLintProvider {
       default:
         return vscode.DiagnosticSeverity.Error;
     }
+  }
+
+  private getPolicyName(tokens) {
+    return tokens[5];
   }
 
   private isValidViolation(violation) {
